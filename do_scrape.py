@@ -40,9 +40,9 @@ def get_silly_image(url, text):
 
     draw = ImageDraw.Draw(img)
     # windows
-    # font = ImageFont.truetype("arial.ttf", 50)
+    # font = ImageFont.truetype('arial.ttf', 50)
     # linux
-    font = ImageFont.truetype("DejaVuSans-Bold.ttf", 50)
+    font = ImageFont.truetype('DejaVuSans-Bold.ttf', 50)
     draw.text((10, 10), text, (255, 255, 255), font=font)
 
     # Play with this later, the problem here is that it's a transparent png
