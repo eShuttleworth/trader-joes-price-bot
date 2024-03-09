@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 from time import sleep
 
-from do_scrape import scrape
+from do_scrape import scrape, get_silly_image
 
 intents = discord.Intents.default()
 intents.messages = True
@@ -32,12 +32,20 @@ async def on_ready():
                 item = update[1]
                 old_price = update[2]
                 new_price = update[3]
+                url = update[4]
+                image_url = update[5]
+                silly_image = get_silly_image(image_url, f"{item} is now {new_price} (was {old_price}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!)")
+                with open(silly_image, 'rb') as f:
+                    picture = discord.File(f)
+
                 if float(old_price) > float(new_price):
-                    await channel.send(f"🟢 HUGE NEWS FOR TRADER JOES GAMERS! 🟢\n\n{item} is now {new_price} (was {old_price})")
+                    await channel.send(f"🟢 HUGE NEWS FOR TRADER JOES GAMERS! 🟢\n\n[{item}]({url}) is now {new_price} (was {old_price})")
+                    await channel.send(file=picture)
                     if float(old_price) > float(new_price) * 2:
                         await channel.send("🌭🌭🌭 HOT DIGGITY DOG! 🌭🌭🌭\n\n")
                 else:
-                    await channel.send(f"🚨 IT'S TRADER JOEVER 🚨\n\n{item} is now {new_price} (was {old_price})")
+                    await channel.send(f"🚨 IT'S TRADER JOEVER 🚨\n\n{item} is now [{new_price}]({url}) (was {old_price})")
+                    await channel.send(file=picture)
                 sleep(0.5)
 
         if update_count == 0:
