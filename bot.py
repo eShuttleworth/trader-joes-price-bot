@@ -27,7 +27,7 @@ async def on_ready():
         for update in updates:
             date = update[0]
             date = datetime.strptime(date, '%b %d, %Y')
-            if today.year == date.year and today.month == date.month and today.day == date.day:
+            if today.year == date.year and today.month == date.month and (today.day == date.day or today.day - 1 == date.day):
                 update_count += 1
                 item = update[1]
                 old_price = update[2]
